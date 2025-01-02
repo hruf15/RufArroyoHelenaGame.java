@@ -6,6 +6,6 @@ public class Main {
         File file = new File("ListadoPeliculas");
         Scanner input = new Scanner(file);
 
-        System.out.println("");
+        System.out.println("") ;
     }
 }
