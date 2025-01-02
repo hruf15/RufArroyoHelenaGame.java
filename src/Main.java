@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Main {
-    private ArrayList<String> guessMovies  = new ArrayList<>();
+    private ArrayList<String> listadoPeliculas  = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
     private boolean exit = false;
 
@@ -18,7 +18,7 @@ public class Main {
             Scanner input = new Scanner(file);
 
             while (input.hasNextLine()){
-                guessMovies.add(input.nextLine());
+                listadoPeliculas.add(input.nextLine());
         }
         input.close();
 
@@ -62,6 +62,32 @@ public class Main {
             }
         }
     }
+
+    public void adivinaLetraPelicula(){
+
+        if (listadoPeliculas.isEmpty()){
+            System.out.println("No hay película disponible para poder jugar.");
+            return;
+        }
+        String pelicula =listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size()));
+        String estado = pelicula.replaceALL("[a-zA-Z]", "*");
+        ArrayList<Character> letrasAdivinadas = new ArrayList<>();
+        ArrayList<Character> letrasIncorrectas = new ArrayList<>();
+        int intentosRestantes = 10;
+        int puntuacion = 0;
+
+
+        file = new File("ListadoPeliculas.txt");
+        Scanner input = new Scanner(file);
+        while (input.hasNextInt()){
+            int value =input.nextInt();
+            System.out.println("Letra escogida:");
+
+
+        }
+    }
+
+            public void adivinaNombrePelicula(){}
 
         System.out.println("") ;
     }
