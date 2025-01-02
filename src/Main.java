@@ -44,15 +44,17 @@ public class Main {
 
                 switch (opcionMenu) {
                     case 1:
-                        adivinaLetra();
+                        adivinaLetraPelicula();
                         break;
                     case 2:
-                        adivinaPelicula();
+                        adivinaNombrePelicula();
                         break;
                    case 3:
                         System.out.println("Ha escogido Salir. Gracias por su colaboración");
                         exit = true;
                         break;
+                    default:
+                        System.out.println("Enrada no válida. Seleccione una opción");
                 }
             } else {
                 System.out.println("Opción incorrecta. Vuelva a introducir la opción deseada");
