@@ -5,14 +5,16 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class Main {
-    private ArrayList<String> listadoPeliculas = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
-    private boolean exit = false;
 
     public static void main(String[] args) {
         Main programa = new Main();
         programa.inicio();
-    }
+            }
+    private ArrayList<String> listadoPeliculas = new ArrayList<>();
+    private Scanner scanner = new Scanner(System.in);
+    private boolean exit = false;
+    String pelicula;
+    String peliculaOculta;
 
     public void inicio() {
         try {
@@ -71,8 +73,10 @@ public class Main {
             return;
         }
 
-        String pelicula = listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size()));
-        System.out.print("Adivina el título de la película: ");
+        pelicula = listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size()));
+        peliculaOculta = pelicula.replaceAll("[a-zA-Z]", "*");
+
+        System.out.print("Adivina el título de la película: "+ peliculaOculta);
         String tituloUsuario = scanner.nextLine().toLowerCase();
 
         if (tituloUsuario.equals(pelicula.toLowerCase())) {
@@ -90,16 +94,16 @@ public class Main {
             System.out.println("No hay película disponible para poder jugar.");
             return;
         }
-        String pelicula = listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size()));
-        String estado = pelicula.replaceAll("[a-zA-Z]", "*");
+        pelicula = listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size()));
+        peliculaOculta = pelicula.replaceAll("[a-zA-Z]", "*");
         ArrayList<Character> letrasAdivinadas = new ArrayList<>();
         ArrayList<Character> letrasIncorrectas = new ArrayList<>();
         int intentosRestantes = 10;
         int puntuacion = 0;
 
-        while (intentosRestantes > 0 && estado.contains("*")) {
+        while (intentosRestantes > 0 && peliculaOculta.contains("*")) {
 
-            System.out.println("Estado actual: " + estado);
+            System.out.println("Estado actual: " + peliculaOculta);
             System.out.println("Letras incorrectas: " + letrasIncorrectas);
             System.out.println("Intentos restantes: " + intentosRestantes);
             System.out.print("Introduce una letra: ");
@@ -112,7 +116,7 @@ public class Main {
             } else if (pelicula.toLowerCase().contains(String.valueOf(letra))) {
                 letrasAdivinadas.add(letra);
                 puntuacion += 10;
-                estado = actualizaEstado(pelicula, letrasAdivinadas);
+                peliculaOculta = actualizaEstado(pelicula, letrasAdivinadas);
 
             } else {
                 letrasIncorrectas.add(letra);
@@ -120,7 +124,7 @@ public class Main {
                 intentosRestantes--;
             }
         }
-        if (!estado.contains("*")) {
+        if (!peliculaOculta.contains("*")) {
             System.out.println("¡Felicidades! Has adivinado el título: " + pelicula);
             System.out.println("Puntuación final: " + puntuacion);
         } else {
