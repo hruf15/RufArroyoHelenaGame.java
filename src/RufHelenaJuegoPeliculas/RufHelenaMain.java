@@ -1,13 +1,15 @@
+package RufHelenaJuegoPeliculas;
+
 import java.util.ArrayList;
 import  java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
 
-public class Main {
+public class RufHelenaMain {
 
     public static void main(String[] args) {
-        Main programa = new Main();
+        RufHelenaMain programa = new RufHelenaMain();
         programa.inicio();
             }
     private ArrayList<String> listadoPeliculas = new ArrayList<>();
@@ -73,11 +75,13 @@ public class Main {
             return;
         }
 
-        pelicula = listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size()));
+        pelicula = listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size())).toLowerCase();
         peliculaOculta = pelicula.replaceAll("[a-zA-Z]", "*");
 
         System.out.print("Adivina el título de la película: "+ peliculaOculta);
+
         String tituloUsuario = scanner.nextLine().toLowerCase();
+
 
         if (tituloUsuario.equals(pelicula.toLowerCase())) {
             System.out.println("¡Correcto! Adivinaste el título.");
@@ -94,7 +98,7 @@ public class Main {
             System.out.println("No hay película disponible para poder jugar.");
             return;
         }
-        pelicula = listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size()));
+        pelicula = listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size())).toLowerCase();
         peliculaOculta = pelicula.replaceAll("[a-zA-Z]", "*");
         ArrayList<Character> letrasAdivinadas = new ArrayList<>();
         ArrayList<Character> letrasIncorrectas = new ArrayList<>();
