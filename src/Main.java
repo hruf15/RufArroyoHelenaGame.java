@@ -2,9 +2,10 @@ import java.util.ArrayList;
 import  java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 public class Main {
-    private ArrayList<String> listadoPeliculas  = new ArrayList<>();
+    private ArrayList<String> listadoPeliculas = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
     private boolean exit = false;
 
@@ -12,23 +13,25 @@ public class Main {
         Main programa = new Main();
         programa.inicio();
     }
+
     public void inicio() {
-        try{
+        try {
             File file = new File("ListadoPeliculas.txt");
             Scanner input = new Scanner(file);
 
-            while (input.hasNextLine()){
+            while (input.hasNextLine()) {
                 listadoPeliculas.add(input.nextLine());
-        }
-        input.close();
+            }
+            input.close();
 
             System.out.println("️¡Bienvenido a 'Adivina la Película'! ️🎬");
             mostrarMenu();
 
         } catch (FileNotFoundException e) {
-            System.out.println("Error: No se pudo encontrar el archivo 'ListadoPeliculas.txt'.");
+            System.out.println("Error: No se pudo encontrar el archivo 'ListadoPeliculas.txt.txt'.");
         }
     }
+
     public void mostrarMenu() {
         while (!exit) {
 
@@ -36,7 +39,7 @@ public class Main {
             System.out.println("[1] 🎦 Adivina una letra ");
             System.out.println("[2] 🎞️ Adivina el título de la película");
             System.out.println("[3] ❌Salir");
-            System.out.println("Seleccione una opción: ");
+            System.out.println("Selecciona una opción: ");
 
             if (scanner.hasNextInt()) {
                 int opcionMenu = scanner.nextInt();
@@ -49,7 +52,7 @@ public class Main {
                     case 2:
                         adivinaNombrePelicula();
                         break;
-                   case 3:
+                    case 3:
                         System.out.println("Ha escogido Salir. Gracias por su colaboración");
                         exit = true;
                         break;
@@ -62,32 +65,87 @@ public class Main {
             }
         }
     }
+    public void adivinaNombrePelicula () {
+        if (listadoPeliculas.isEmpty()) {
+            System.out.println("No hay películas disponibles para jugar.");
+            return;
+        }
 
-    public void adivinaLetraPelicula(){
+        String pelicula = listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size()));
+        System.out.print("Adivina el título de la película: ");
+        String tituloUsuario = scanner.nextLine().toLowerCase();
 
-        if (listadoPeliculas.isEmpty()){
+        if (tituloUsuario.equals(pelicula.toLowerCase())) {
+            System.out.println("¡Correcto! Adivinaste el título.");
+            System.out.println("Puntuación: 20 puntos.");
+        } else {
+            System.out.println("Incorrecto. El título era: " + pelicula);
+            System.out.println("Puntuación: -20 puntos.");
+        }
+    }
+
+    public void adivinaLetraPelicula() {
+
+        if (listadoPeliculas.isEmpty()) {
             System.out.println("No hay película disponible para poder jugar.");
             return;
         }
-        String pelicula =listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size()));
-        String estado = pelicula.replaceALL("[a-zA-Z]", "*");
+        String pelicula = listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size()));
+        String estado = pelicula.replaceAll("[a-zA-Z]", "*");
         ArrayList<Character> letrasAdivinadas = new ArrayList<>();
         ArrayList<Character> letrasIncorrectas = new ArrayList<>();
         int intentosRestantes = 10;
         int puntuacion = 0;
 
+        while (intentosRestantes > 0 && estado.contains("*")) {
 
-        file = new File("ListadoPeliculas.txt");
-        Scanner input = new Scanner(file);
-        while (input.hasNextInt()){
-            int value =input.nextInt();
-            System.out.println("Letra escogida:");
+            System.out.println("Estado actual: " + estado);
+            System.out.println("Letras incorrectas: " + letrasIncorrectas);
+            System.out.println("Intentos restantes: " + intentosRestantes);
+            System.out.print("Introduce una letra: ");
 
+            char letra = scanner.nextLine().toLowerCase().charAt(0);
 
+            if (letrasAdivinadas.contains(letra) || letrasIncorrectas.contains(letra)) {
+                System.out.println("Ya has adivinado esta letra. Intenta otra.");
+
+            } else if (pelicula.toLowerCase().contains(String.valueOf(letra))) {
+                letrasAdivinadas.add(letra);
+                puntuacion += 10;
+                estado = actualizaEstado(pelicula, letrasAdivinadas);
+
+            } else {
+                letrasIncorrectas.add(letra);
+                puntuacion -= 10;
+                intentosRestantes--;
+            }
+        }
+        if (!estado.contains("*")) {
+            System.out.println("¡Felicidades! Has adivinado el título: " + pelicula);
+            System.out.println("Puntuación final: " + puntuacion);
+        } else {
+            System.out.println("Lo siento, no has adivinado el título. El título era: " + pelicula);
+            System.out.println("Puntuación final: " + puntuacion);
         }
     }
+        public String actualizaEstado (String pelicula, ArrayList<Character> letrasAdivinadas){
+            StringBuilder estadoBuilder = new StringBuilder();
 
-            public void adivinaNombrePelicula(){}
+            for (char c : pelicula.toCharArray()) {
+                if (letrasAdivinadas.contains(c)) {
+                    estadoBuilder.append(c);
+                } else {
+                    estadoBuilder.append('*');
+                }
+            }
 
-        System.out.println("") ;
+            return estadoBuilder.toString();
+        }
+
+
     }
+
+
+
+
+
