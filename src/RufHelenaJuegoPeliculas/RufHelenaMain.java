@@ -1,9 +1,9 @@
 package RufHelenaJuegoPeliculas;
 
+import java.io.*;
+import java.nio.channels.ScatteringByteChannel;
 import java.util.ArrayList;
 import  java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class RufHelenaMain {
@@ -11,7 +11,8 @@ public class RufHelenaMain {
     public static void main(String[] args) {
         RufHelenaMain programa = new RufHelenaMain();
         programa.inicio();
-            }
+    }
+
     private ArrayList<String> listadoPeliculas = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
     private boolean exit = false;
@@ -69,7 +70,8 @@ public class RufHelenaMain {
             }
         }
     }
-    public void adivinaNombrePelicula () {
+
+    public void adivinaNombrePelicula() {
         if (listadoPeliculas.isEmpty()) {
             System.out.println("No hay películas disponibles para jugar.");
             return;
@@ -78,7 +80,7 @@ public class RufHelenaMain {
         pelicula = listadoPeliculas.get(new Random().nextInt(listadoPeliculas.size())).toLowerCase();
         peliculaOculta = pelicula.replaceAll("[a-zA-Z]", "*");
 
-        System.out.print("Adivina el título de la película: "+ peliculaOculta);
+        System.out.print("Adivina el título de la película: " + peliculaOculta);
 
         String tituloUsuario = scanner.nextLine().toLowerCase();
 
@@ -136,22 +138,30 @@ public class RufHelenaMain {
             System.out.println("Puntuación final: " + puntuacion);
         }
     }
-        public String actualizaEstado (String pelicula, ArrayList<Character> letrasAdivinadas){
-            StringBuilder estadoBuilder = new StringBuilder();
 
-            for (char c : pelicula.toCharArray()) {
-                if (letrasAdivinadas.contains(c)) {
-                    estadoBuilder.append(c);
-                } else {
-                    estadoBuilder.append('*');
-                }
+    public String actualizaEstado(String pelicula, ArrayList<Character> letrasAdivinadas) {
+        StringBuilder estadoBuilder = new StringBuilder();
+
+        for (char c : pelicula.toCharArray()) {
+            if (letrasAdivinadas.contains(c)) {
+                estadoBuilder.append(c);
+            } else {
+                estadoBuilder.append('*');
             }
-
-            return estadoBuilder.toString();
         }
+
+        return estadoBuilder.toString();
+    }
+
+
+        public void rankingUsuarios() {
+            System.out.println("RANKING JUGADORES🏆!");
+            System.out.print("Ingrese su nombre para registrarse en el ranking: ");
 
 
     }
+}
+
 
 
 

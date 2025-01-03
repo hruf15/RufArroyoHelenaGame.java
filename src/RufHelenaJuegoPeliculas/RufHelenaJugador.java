@@ -1,8 +1,9 @@
 package RufHelenaJuegoPeliculas;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class RufHelenaJugador {
+public class RufHelenaJugador implements Serializable {
 
     private String nombre;
     private int puntuacion;
